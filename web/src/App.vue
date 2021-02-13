@@ -111,9 +111,18 @@
             <li
               class="list-group-item"
               v-for="domain in domains"
-              v-bind:key="domain"
+              v-bind:key="domain.name"
             >
-              {{ domain }}
+              <div class="row">
+                <div class="col-md">
+                  {{ domain.name }}
+                </div>
+                <div class="col-md text-right">
+                  <a class="btn btn-info" v-bind:href="domain.checkout" target="blank">
+                    <span class="fa fa-shopping-cart"></span>
+                  </a>
+                </div>
+              </div>
             </li>
           </ul>
         </div>
@@ -132,7 +141,6 @@ export default {
     return {
       prefixes: ["Air", "Jet", "Flight"],
       sufixes: ["Hub", "Station", "Mart"],
-      domains: ["AirHub", "AirStation", "JetStation", "FlightMart"],
       prefix: "",
       sufix: "",
     };
@@ -141,28 +149,32 @@ export default {
     addPrefix(prefix) {
       this.prefixes.push(prefix);
       this.prefix = "";
-      this.generate();
     },
     addSufix(sufix) {
       this.sufixes.push(sufix);
       this.sufix = "";
-      this.generate();
-    },
-    generate() {
-      this.domains = [];
-      for (const prefix of this.prefixes) {
-        for (const sufix of this.sufixes) {
-          this.domains.push(prefix + sufix);
-        }
-      }
     },
     deletePrefix(prefix) {
       this.prefixes.splice(this.prefixes.indexOf(prefix), 1);
-      this.generate();
     },
     deleteSufix(sufix) {
       this.sufixes.splice(this.sufixes.indexOf(sufix), 1);
-      this.generate();
+    },
+  },
+  computed: {
+    domains() {
+      const domains = [];
+      for (const prefix of this.prefixes) {
+        for (const sufix of this.sufixes) {
+          const name = prefix + sufix;
+          const url = name.toLowerCase();
+          const checkout = `https://checkout.hostgator.com.br/?a=add&sld=${url}&tld=.com&domaincycle=2&mkt=builder&promocode=CRIADORDESITESTRIAL&_ga=2.14423991.141718073.1613248330-1233814939.1613248330`;
+
+          domains.push({ name, checkout });
+        }
+      }
+
+      return domains;
     },
   },
 };
