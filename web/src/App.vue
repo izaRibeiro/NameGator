@@ -3,8 +3,8 @@
     <div id="slogan" class="text-center">
       <h1>NameGator</h1>
       <br />
-      <h6 class="text-secundary">
-        Gerador de nomes utilizando Vue, GraphQL e Node
+      <h6 class="text-secondary">
+        Gerador de nomes utilizando Vue.js, GraphQL e Node
       </h6>
     </div>
     <div id="main">
@@ -16,11 +16,12 @@
 <script>
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
-import DomainList from "./components/DomainList.vue";
-
+import DomainList from "./components/DomainList";
 export default {
-  components: { DomainList },
-  name: "App",
+  name: "app",
+  components: {
+    DomainList,
+  },
 };
 </script>
 
@@ -29,10 +30,8 @@ export default {
   margin-top: 30px;
   margin-bottom: 30px;
 }
-
 #main {
   background-color: #f1f1f1;
-  padding: 30px;
   padding-top: 30px;
   padding-bottom: 30px;
 }
